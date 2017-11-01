@@ -1,0 +1,39 @@
+  {{ define "content" }}
+  
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+      <h2>Plat</h2>
+      <select id="plat" title="Select your surfboard" class="selectpicker">
+        <option value="vide" >Select...</option>
+        <option data-thumbnail="./images/pizza.png" value="pizza">Pizza</option>
+        <option data-thumbnail="./images/entrecote.png"  value="entrecote">Entrecôte</option>
+        <option data-thumbnail="./images/poisson.png" value="poisson">Poisson</option>
+      </select>
+      <h2>Dessert</h2>
+      <select id="dessert" title="Select your surfboard" class="selectpicker">
+        <option value="vide">Select...</option>
+        <option data-thumbnail="images/fruits.png" value="fruits">Fruits</option>
+        <option data-thumbnail="images/mousse.png" value="mousse">Mousse au chocolat</option> 
+        <option data-thumbnail="images/fromage.png" value="fromage">Fromage</option>
+      </select>
+      <br>
+      <p>
+          <button id="order" type="button" class="btn btn-primary">Passer la commander</button>
+      </p>
+      
+      <script type="text/javascript">
+          $("#order").click(function(){
+              var eplat = document.getElementById("plat");
+              var plat = eplat.options[eplat.selectedIndex].value
+              var edessert = document.getElementById("dessert");
+              var dessert = edessert.options[edessert.selectedIndex].value
+              window.location.href = "/commande?plat="+plat+"&dessert="+dessert;
+          });
+      </script>
+
+  
+  {{ end }}
+  
+  {{ define "head" }}
+    <!--Show ability to set title with the same data-->
+    <title>Composer votre menu.</title>
+  {{ end }}

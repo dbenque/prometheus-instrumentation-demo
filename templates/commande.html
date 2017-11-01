@@ -1,0 +1,24 @@
+  {{ define "content" }}
+  
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+      <h2>Votre commande est passée en cuisine</h2>
+      <img src="images/{{.Plat}}.png"/>
+      <img src="images/{{.Dessert}}.png"/>
+      <br>
+      <p>
+          <button id="order" type="button" class="btn btn-primary">Passer une autre commander</button>
+      </p>
+      
+      <script type="text/javascript">
+          $("#order").click(function(){
+              window.location.href = "/";
+          });
+      </script>
+
+  
+  {{ end }}
+  
+  {{ define "head" }}
+    <!--Show ability to set title with the same data-->
+    <title>Composer votre menu.</title>
+  {{ end }}

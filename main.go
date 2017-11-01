@@ -2,12 +2,12 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"html/template"
 	"log"
-	"math"
-	"math/rand"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -15,41 +15,20 @@ import (
 )
 
 var (
-	addr              = flag.String("listen-address", ":8080", "The address to listen on for HTTP requests.")
-	uniformDomain     = flag.Float64("uniform.domain", 0.0002, "The domain for the uniform distribution.")
-	normDomain        = flag.Float64("normal.domain", 0.0002, "The domain for the normal distribution.")
-	normMean          = flag.Float64("normal.mean", 0.00001, "The mean for the normal distribution.")
-	oscillationPeriod = flag.Duration("oscillation-period", 10*time.Minute, "The duration of the rate oscillation period.")
+	addr = flag.String("listen-address", ":8080", "The address to listen on for HTTP requests.")
 )
 
 var (
-	// Create a summary to track fictional interservice RPC latencies for three
-	// distinct services with different latency distributions. These services are
-	// differentiated via a "service" label.
-	rpcDurations = prometheus.NewSummaryVec(
-		prometheus.SummaryOpts{
-			Name:       "rpc_durations_seconds",
-			Help:       "RPC latency distributions.",
-			Objectives: map[float64]float64{0.5: 0.05, 0.9: 0.01, 0.99: 0.001},
-		},
-		[]string{"service"},
-	)
-	// The same as above, but now as a histogram, and only for the normal
-	// distribution. The buckets are targeted to the parameters of the
-	// normal distribution, with 20 buckets centered on the mean, each
-	// half-sigma wide.
-	rpcDurationsHistogram = prometheus.NewHistogram(prometheus.HistogramOpts{
-		Name:    "rpc_durations_histogram_seconds",
-		Help:    "RPC latency distributions.",
-		Buckets: prometheus.LinearBuckets(*normMean-5**normDomain, .5**normDomain, 20),
-	})
+	commandeDuration = prometheus.NewHistogramVec(prometheus.HistogramOpts{
+		Name:    "demo_commande_seconds",
+		Help:    "Temps de prise de commande.",
+		Buckets: prometheus.LinearBuckets(2, 2, 10),
+	}, []string{"plat", "dessert"})
 )
 
 func init() {
 	// Register the summary and the histogram with Prometheus's default registry.
-	prometheus.MustRegister(rpcDurations)
-	prometheus.MustRegister(rpcDurationsHistogram)
-
+	prometheus.MustRegister(commandeDuration)
 	initializeTemplates()
 	defineRoutes()
 }
@@ -68,24 +47,17 @@ func initializeTemplates() {
 	}
 }
 
-// A Welcome message with title, demonstrates passing data to a template
-type Welcome struct {
-	Title   string
-	Message string
+type Commande struct {
+	Plat    string
+	Dessert string
 }
 
 func defineRoutes() {
-	http.HandleFunc("/showcase", showcaseHandler)
-	http.HandleFunc("/", welcomeHandler)
+	//http.HandleFunc("/showcase", showcaseHandler)
+	http.HandleFunc("/", menuHandler)
+	http.HandleFunc("/commande", commandeHandler)
 	http.Handle("/bootstrap/", http.StripPrefix("/bootstrap/", http.FileServer(http.Dir("./bootstrap/"))))
-}
-
-// A template taking a struct pointer (&message) containing data to render
-func welcomeHandler(w http.ResponseWriter, r *http.Request) {
-	message := Welcome{Title: "Bootstrap, Go, and GAE", Message: "Bootstrap added to Golang on App Engine.  Feel free to customize further"}
-
-	// outerTheme refernces the template defined within theme.html
-	templates["welcome.html"].ExecuteTemplate(w, "outerTheme", &message)
+	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("./images/"))))
 }
 
 func showcaseHandler(w http.ResponseWriter, r *http.Request) {
@@ -93,39 +65,30 @@ func showcaseHandler(w http.ResponseWriter, r *http.Request) {
 	templates["showcase.html"].ExecuteTemplate(w, "outerTheme", "")
 }
 
+func menuHandler(w http.ResponseWriter, r *http.Request) {
+	// showcase.html doesn't expect any data, so pass empty string ""
+	now := strconv.FormatInt(time.Now().Unix(), 10)
+	cookieNow := &http.Cookie{Name: "timereq", Value: now, HttpOnly: false}
+	http.SetCookie(w, cookieNow)
+	templates["menu.html"].ExecuteTemplate(w, "outerTheme", "")
+}
+
+func commandeHandler(w http.ResponseWriter, r *http.Request) {
+	cookieNow, err := r.Cookie("timereq")
+	c := Commande{Plat: r.FormValue("plat"), Dessert: r.FormValue("dessert")}
+	templates["commande.html"].ExecuteTemplate(w, "outerTheme", &c)
+	if err == nil && cookieNow != nil {
+		v, _ := strconv.Atoi(cookieNow.Value)
+		s := time.Now().Sub(time.Unix(int64(v), 0)).Seconds()
+		commandeDuration.WithLabelValues(c.Plat, c.Dessert).Observe(s)
+	} else {
+		commandeDuration.WithLabelValues(c.Plat, c.Dessert).Observe(0)
+		fmt.Printf("Error: %v\n", err)
+	}
+}
+
 func main() {
 	flag.Parse()
-
-	start := time.Now()
-	oscillationFactor := func() float64 {
-		return 2 + math.Sin(math.Sin(2*math.Pi*float64(time.Since(start))/float64(*oscillationPeriod)))
-	}
-
-	// Periodically record some sample latencies for the three services.
-	go func() {
-		for {
-			v := rand.Float64() * *uniformDomain
-			rpcDurations.WithLabelValues("uniform").Observe(v)
-			time.Sleep(time.Duration(100*oscillationFactor()) * time.Millisecond)
-		}
-	}()
-
-	go func() {
-		for {
-			v := (rand.NormFloat64() * *normDomain) + *normMean
-			rpcDurations.WithLabelValues("normal").Observe(v)
-			rpcDurationsHistogram.Observe(v)
-			time.Sleep(time.Duration(75*oscillationFactor()) * time.Millisecond)
-		}
-	}()
-
-	go func() {
-		for {
-			v := rand.ExpFloat64() / 1e6
-			rpcDurations.WithLabelValues("exponential").Observe(v)
-			time.Sleep(time.Duration(50*oscillationFactor()) * time.Millisecond)
-		}
-	}()
 
 	// Expose the registered metrics via HTTP.
 	http.Handle("/metrics", promhttp.Handler())
