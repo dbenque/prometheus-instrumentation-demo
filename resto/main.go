@@ -60,10 +60,10 @@ func defineRoutes() {
 	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("./images/"))))
 }
 
-func showcaseHandler(w http.ResponseWriter, r *http.Request) {
-	// showcase.html doesn't expect any data, so pass empty string ""
-	templates["showcase.html"].ExecuteTemplate(w, "outerTheme", "")
-}
+// func showcaseHandler(w http.ResponseWriter, r *http.Request) {
+// 	// showcase.html doesn't expect any data, so pass empty string ""
+// 	templates["showcase.html"].ExecuteTemplate(w, "outerTheme", "")
+// }
 
 func menuHandler(w http.ResponseWriter, r *http.Request) {
 	// showcase.html doesn't expect any data, so pass empty string ""
@@ -87,7 +87,22 @@ func commandeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+var BUILDTIME string
+var VERSION string
+var COMMIT string
+var BRANCH string
+
+func mainHeader() {
+	fmt.Println("Program started at: " + time.Now().String())
+	fmt.Println("BUILDTIME=" + BUILDTIME)
+	fmt.Println("VERSION=" + VERSION)
+	fmt.Println("COMMIT=" + COMMIT)
+	fmt.Println("BRANCH=" + BRANCH)
+	fmt.Println("-------")
+}
+
 func main() {
+	mainHeader()
 	flag.Parse()
 
 	// Expose the registered metrics via HTTP.
