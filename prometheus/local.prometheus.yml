@@ -27,3 +27,8 @@ scrape_configs:
       - targets: ['localhost:8080']
         labels:
           application: 'resto'
+  - job_name: 'node'
+    scrape_interval: 15s
+    static_configs:
+      - targets:
+        - 'localhost:9100'
