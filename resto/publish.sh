@@ -24,7 +24,7 @@ if [[ $PUBLISHED == 1 ]]; then
 fi
 
 BASEDIR=$(dirname "$0")
-cd $BASEDIR/..
+cd $BASEDIR
 make docker
 docker tag $IMAGE:latest $IMAGEFULL:$VERSION
 docker push $IMAGEFULL:$VERSION

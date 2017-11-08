@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: simple
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /svc
+        backend:
+          serviceName: http-svc
+          servicePort: 80

@@ -17,7 +17,7 @@ build:
 	cd - >/dev/null	
 
 docker: build
-	rm ${BUILD_DIR}/docker/${BINARY}
+	- rm ${BUILD_DIR}/docker/${BINARY}
 	cp ${GOPATH}/bin/${BINARY}-${GOOS}-${GOARCH} ${BUILD_DIR}/docker/${BINARY}
 	cd ${BUILD_DIR}/docker; \
 	docker build -t ${DOCKER_IMAGE} .
