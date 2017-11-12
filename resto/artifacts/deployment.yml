@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    run: resto
+  name: resto
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: resto
+  template:
+    metadata:
+      labels:
+        run: resto
+    spec:
+      containers:
+      - image: dbenque/prom-demo-resto:v2
+        imagePullPolicy: IfNotPresent
+        name: resto
+        ports:
+        - containerPort: 8080
+          protocol: TCP

@@ -78,7 +78,6 @@ kk config set-context $(kubectl config current-context) --namespace=$NAMESPACE
 
 KUBEPROM=$GOPATH/src/github.com/dbenque/prometheus-instrumentation-demo/vendor/github.com/coreos/prometheus-operator/contrib/kube-prometheus
 
-#kk apply -f ../prometheus/prom-kube-bundle.yaml
 kk apply -f $KUBEPROM/manifests/prometheus-operator
 
 # Wait for CRDs to be ready.
@@ -109,7 +108,7 @@ kk apply -f $KUBEPROM/manifests/prometheus/prometheus-k8s-service-monitor-promet
 kk apply -f $KUBEPROM/manifests/prometheus/prometheus-k8s-service-monitor-apiserver.yaml
 kk apply -f $KUBEPROM/manifests/prometheus/prometheus-k8s-service.yaml
 kk apply -f $KUBEPROM/manifests/prometheus/prometheus-k8s-service-monitor-kube-controller-manager.yaml
-kk apply -f $KUBEPROM/manifests/prometheus/prometheus-k8s.yaml
+kk apply -f <(cat $KUBEPROM/manifests/prometheus/prometheus-k8s.yaml; echo "  externalLabels:"; echo "    cluster: alibaba")
 kk apply -f $KUBEPROM/manifests/prometheus/prometheus-k8s-service-monitor-kubelet.yaml
 
 ```
