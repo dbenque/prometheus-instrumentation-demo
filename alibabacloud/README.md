@@ -1,4 +1,4 @@
-# install kubernetes
+# create cluster with kubernetes
 
 Doc : https://www.alibabacloud.com/help/doc-detail/53752.htm
 
@@ -56,7 +56,11 @@ kk run resto --image=dbenque/prom-demo-resto:v2 --expose --port=8080
 
 Note: I am not using ngnix ingress because the I am facing problem with content-type overwrite that prevent correct loading of css and js resources that are sent as "text/html"
 
-Move the service **resto** as node port
+Move the service **resto** as node port doing edit (change ClusterIP to NodePort):
+```
+kk edit service resto
+```
+then retrieve the allocated NodePort
 ```
 PORTRESTO=$(kk get service resto -ojsonpath='{..nodePort}')
 ```
