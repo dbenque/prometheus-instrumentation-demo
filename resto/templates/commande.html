@@ -2,8 +2,8 @@
   
   <!-- Main jumbotron for a primary marketing message or call to action -->
       <h2>Votre commande est passée en cuisine</h2>
-      <img src="images/{{.Plat}}.png"/>
-      <img src="images/{{.Dessert}}.png"/>
+      <img src="./images/{{.Plat}}.png"/>
+      <img src="./images/{{.Dessert}}.png"/>
       <br>
       <p>
           <button id="order" type="button" class="btn btn-primary">Passer une autre commander</button>
@@ -11,7 +11,7 @@
       
       <script type="text/javascript">
           $("#order").click(function(){
-              window.location.href = "/";
+              window.location.href = "./";
           });
       </script>
 

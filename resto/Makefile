@@ -17,11 +17,11 @@ build:
 	cd - >/dev/null	
 
 docker: build
-	- rm ${BUILD_DIR}/docker/${BINARY}
-	cp ${GOPATH}/bin/${BINARY}-${GOOS}-${GOARCH} ${BUILD_DIR}/docker/${BINARY}
-	cd ${BUILD_DIR}/docker; \
-	docker build -t ${DOCKER_IMAGE} .
-	cd - >/dev/null
+	- rm ${BUILD_DIR}/${BINARY}
+	cp ${GOPATH}/bin/${BINARY}-${GOOS}-${GOARCH} ${BUILD_DIR}/${BINARY}
+	cd ${BUILD_DIR};\
+	docker build --no-cache -t ${DOCKER_IMAGE} . ;\
+	cd - >/dev/null	
 
 clean:
 	rm -f ${GOPATH}/bin/${BINARY}-*-${GOARCH}

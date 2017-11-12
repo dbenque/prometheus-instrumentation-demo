@@ -1,10 +1,14 @@
-hash: 6ed81c53946f317f5930748239ce004e1a9b0602770080bb1dffa0411a96034a
-updated: 2017-11-01T16:00:25.19789829+01:00
+hash: 72597c7958026bbe0e28a9fc260ac99df9838b32966d796334d4404fa41ae03e
+updated: 2017-11-12T00:43:44.428877002+01:00
 imports:
 - name: github.com/beorn7/perks
   version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
   subpackages:
   - quantile
+- name: github.com/coreos/prometheus-operator
+  version: 426014ce9ee9ee8334c713f84f6e503ab7c4b2e2
+  subpackages:
+  - contrib/kube-prometheus
 - name: github.com/golang/protobuf
   version: 4bd1920723d7b7c925de087aa32e2187708897f7
   subpackages:
@@ -23,7 +27,7 @@ imports:
   subpackages:
   - go
 - name: github.com/prometheus/common
-  version: 1bab55dd05dbff384524a6a1c99006d9eb5f139b
+  version: e3fb1a1acd7605367a2b378bc2e2f893c05174b7
   subpackages:
   - expfmt
   - internal/bitbucket.org/ww/goautoneg
