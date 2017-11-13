@@ -33,7 +33,7 @@ gcloud beta container --project "prometheus-demo-185320" clusters create "cluste
 get the Kubernetes cluster configuration
 
 ```
-KUBECONFIG=/home/david/.kube/gce.conf gcloud container clusters get-credentials cluster-1 --zone us-central1-a --project prometheus-demo-185320
+KUBECONFIG=$HOME/.kube/gce.conf gcloud container clusters get-credentials cluster-1 --zone us-central1-a --project prometheus-demo-185320
 ```
 
 If you plan to work in a multi-context environment then check the project **https://github.com/dbenque/k8s-ps1** use **kcontext.sh**
@@ -41,6 +41,7 @@ If you plan to work in a multi-context environment then check the project **http
 export KUBECONFIG=$KUBECONFIG:~/.kube/gce.conf
 kubectl config getcontexts
 kubectl config rename-context gke_prometheus-demo-185320_us-central1-a_cluster-1 gke
+kubectl config use-context gke
 ```
 
 For later use get the External_IP of one node:
