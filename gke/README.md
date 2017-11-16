@@ -125,6 +125,8 @@ PORT_ALERT=$(kubectl get service alertmanager-main -ojsonpath='{..nodePort}')
 gcloud compute firewall-rules create monitoring --allow tcp:$PORT_PROM,tcp:$PORT_GRAFANA,tcp:$PORT_ALERT
 ```
 
+Now browse IP:PORT_PROM, IP:PORT_GRAFANA  (admin:admin)
+
 # install application monitoring
 
 ```
