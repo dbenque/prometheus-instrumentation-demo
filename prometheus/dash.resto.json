@@ -1,0 +1,474 @@
+{
+   "dashboard" : {
+      "timezone" : "",
+      "graphTooltip" : 0,
+      "editable" : true,
+      "id" : null,
+      "title" : "Resto",
+      "annotations" : {
+         "list" : [
+            {
+               "type" : "dashboard",
+               "enable" : true,
+               "name" : "Annotations & Alerts",
+               "datasource" : "-- Grafana --",
+               "iconColor" : "rgba(0, 211, 255, 1)",
+               "hide" : true,
+               "builtIn" : 1
+            }
+         ]
+      },
+      "style" : "dark",
+      "schemaVersion" : 14,
+      "timepicker" : {
+         "time_options" : [
+            "5m",
+            "15m",
+            "1h",
+            "6h",
+            "12h",
+            "24h",
+            "2d",
+            "7d",
+            "30d"
+         ],
+         "refresh_intervals" : [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+         ]
+      },
+      "time" : {
+         "to" : "now",
+         "from" : "now-3h"
+      },
+      "hideControls" : false,
+      "gnetId" : null,
+      "links" : [],
+      "refresh" : "5s",
+      "rows" : [
+         {
+            "height" : 250,
+            "collapse" : false,
+            "repeatRowId" : null,
+            "titleSize" : "h6",
+            "repeatIteration" : null,
+            "title" : "Dashboard Row",
+            "showTitle" : false,
+            "repeat" : null,
+            "panels" : [
+               {
+                  "spaceLength" : 10,
+                  "title" : "Plat sur 1h",
+                  "points" : false,
+                  "targets" : [
+                     {
+                        "expr" : "sum(increase(demo_commande_seconds_count[1h])) by (plat)",
+                        "refId" : "B",
+                        "intervalFactor" : 2,
+                        "format" : "time_series"
+                     }
+                  ],
+                  "percentage" : false,
+                  "bars" : false,
+                  "xaxis" : {
+                     "buckets" : null,
+                     "values" : [],
+                     "mode" : "time",
+                     "show" : true,
+                     "name" : null
+                  },
+                  "tooltip" : {
+                     "value_type" : "individual",
+                     "sort" : 0,
+                     "shared" : true
+                  },
+                  "id" : 4,
+                  "renderer" : "flot",
+                  "timeFrom" : null,
+                  "type" : "graph",
+                  "aliasColors" : {},
+                  "datasource" : null,
+                  "fill" : 1,
+                  "linewidth" : 1,
+                  "nullPointMode" : "null",
+                  "stack" : false,
+                  "legend" : {
+                     "max" : false,
+                     "current" : false,
+                     "total" : false,
+                     "show" : true,
+                     "avg" : false,
+                     "min" : false,
+                     "values" : false
+                  },
+                  "seriesOverrides" : [],
+                  "pointradius" : 5,
+                  "lines" : true,
+                  "links" : [],
+                  "steppedLine" : false,
+                  "timeShift" : null,
+                  "dashes" : false,
+                  "dashLength" : 10,
+                  "thresholds" : [],
+                  "span" : 6,
+                  "yaxes" : [
+                     {
+                        "show" : true,
+                        "format" : "short",
+                        "min" : null,
+                        "label" : null,
+                        "max" : null,
+                        "logBase" : 1
+                     },
+                     {
+                        "show" : true,
+                        "format" : "short",
+                        "label" : null,
+                        "min" : null,
+                        "max" : null,
+                        "logBase" : 1
+                     }
+                  ]
+               },
+               {
+                  "tooltip" : {
+                     "shared" : true,
+                     "sort" : 0,
+                     "value_type" : "individual"
+                  },
+                  "xaxis" : {
+                     "buckets" : null,
+                     "mode" : "time",
+                     "show" : true,
+                     "name" : null,
+                     "values" : []
+                  },
+                  "renderer" : "flot",
+                  "id" : 5,
+                  "aliasColors" : {},
+                  "type" : "graph",
+                  "timeFrom" : null,
+                  "title" : "Dessert sur 1h",
+                  "spaceLength" : 10,
+                  "targets" : [
+                     {
+                        "expr" : "sum(increase(demo_commande_seconds_count[1h])) by (dessert)",
+                        "format" : "time_series",
+                        "intervalFactor" : 2,
+                        "refId" : "B"
+                     }
+                  ],
+                  "bars" : false,
+                  "percentage" : false,
+                  "points" : false,
+                  "dashes" : false,
+                  "timeShift" : null,
+                  "dashLength" : 10,
+                  "lines" : true,
+                  "pointradius" : 5,
+                  "steppedLine" : false,
+                  "links" : [],
+                  "yaxes" : [
+                     {
+                        "logBase" : 1,
+                        "max" : null,
+                        "label" : null,
+                        "min" : null,
+                        "format" : "short",
+                        "show" : true
+                     },
+                     {
+                        "format" : "short",
+                        "show" : true,
+                        "min" : null,
+                        "label" : null,
+                        "max" : null,
+                        "logBase" : 1
+                     }
+                  ],
+                  "thresholds" : [],
+                  "span" : 6,
+                  "stack" : false,
+                  "legend" : {
+                     "max" : false,
+                     "show" : true,
+                     "current" : false,
+                     "total" : false,
+                     "values" : false,
+                     "min" : false,
+                     "avg" : false
+                  },
+                  "fill" : 1,
+                  "datasource" : null,
+                  "linewidth" : 1,
+                  "nullPointMode" : "null",
+                  "seriesOverrides" : []
+               }
+            ]
+         },
+         {
+            "repeatIteration" : null,
+            "titleSize" : "h6",
+            "repeatRowId" : null,
+            "collapse" : false,
+            "height" : 250,
+            "panels" : [
+               {
+                  "seriesOverrides" : [],
+                  "stack" : false,
+                  "legend" : {
+                     "max" : false,
+                     "values" : false,
+                     "min" : false,
+                     "avg" : false,
+                     "show" : true,
+                     "current" : false,
+                     "total" : false
+                  },
+                  "datasource" : null,
+                  "fill" : 1,
+                  "linewidth" : 1,
+                  "nullPointMode" : "null",
+                  "yaxes" : [
+                     {
+                        "logBase" : 1,
+                        "max" : null,
+                        "min" : null,
+                        "label" : null,
+                        "format" : "short",
+                        "show" : true
+                     },
+                     {
+                        "logBase" : 1,
+                        "max" : null,
+                        "label" : null,
+                        "min" : null,
+                        "format" : "short",
+                        "show" : true
+                     }
+                  ],
+                  "span" : 4,
+                  "thresholds" : [],
+                  "dashes" : false,
+                  "timeShift" : null,
+                  "dashLength" : 10,
+                  "lines" : true,
+                  "pointradius" : 5,
+                  "steppedLine" : false,
+                  "links" : [],
+                  "targets" : [
+                     {
+                        "format" : "time_series",
+                        "intervalFactor" : 2,
+                        "hide" : false,
+                        "refId" : "A",
+                        "expr" : "topk(1, sum(increase(demo_commande_seconds_count[1h])) by (plat,dessert))"
+                     }
+                  ],
+                  "percentage" : false,
+                  "bars" : false,
+                  "points" : false,
+                  "spaceLength" : 10,
+                  "title" : "Top menu",
+                  "renderer" : "flot",
+                  "id" : 6,
+                  "type" : "graph",
+                  "timeFrom" : null,
+                  "aliasColors" : {},
+                  "xaxis" : {
+                     "buckets" : null,
+                     "values" : [],
+                     "show" : true,
+                     "mode" : "time",
+                     "name" : null
+                  },
+                  "tooltip" : {
+                     "shared" : true,
+                     "sort" : 0,
+                     "value_type" : "individual"
+                  }
+               },
+               {
+                  "seriesOverrides" : [],
+                  "stack" : false,
+                  "legend" : {
+                     "total" : false,
+                     "current" : false,
+                     "show" : true,
+                     "min" : false,
+                     "avg" : false,
+                     "values" : false,
+                     "max" : false
+                  },
+                  "datasource" : null,
+                  "fill" : 1,
+                  "linewidth" : 1,
+                  "nullPointMode" : "null",
+                  "yaxes" : [
+                     {
+                        "max" : null,
+                        "logBase" : 1,
+                        "format" : "short",
+                        "show" : true,
+                        "min" : null,
+                        "label" : null
+                     },
+                     {
+                        "max" : null,
+                        "logBase" : 1,
+                        "format" : "short",
+                        "show" : true,
+                        "label" : null,
+                        "min" : null
+                     }
+                  ],
+                  "thresholds" : [],
+                  "span" : 4,
+                  "timeShift" : null,
+                  "dashes" : false,
+                  "dashLength" : 10,
+                  "pointradius" : 5,
+                  "lines" : true,
+                  "steppedLine" : false,
+                  "links" : [],
+                  "targets" : [
+                     {
+                        "expr" : "topk(1, sum(increase(demo_commande_seconds_count[1h])) by (plat))",
+                        "intervalFactor" : 2,
+                        "format" : "time_series",
+                        "hide" : false,
+                        "refId" : "A"
+                     }
+                  ],
+                  "bars" : false,
+                  "percentage" : false,
+                  "points" : false,
+                  "spaceLength" : 10,
+                  "title" : "Top plat",
+                  "id" : 7,
+                  "renderer" : "flot",
+                  "aliasColors" : {},
+                  "type" : "graph",
+                  "timeFrom" : null,
+                  "xaxis" : {
+                     "buckets" : null,
+                     "values" : [],
+                     "name" : null,
+                     "mode" : "time",
+                     "show" : true
+                  },
+                  "tooltip" : {
+                     "shared" : true,
+                     "value_type" : "individual",
+                     "sort" : 0
+                  }
+               },
+               {
+                  "type" : "graph",
+                  "aliasColors" : {},
+                  "timeFrom" : null,
+                  "renderer" : "flot",
+                  "id" : 8,
+                  "tooltip" : {
+                     "shared" : true,
+                     "value_type" : "individual",
+                     "sort" : 0
+                  },
+                  "xaxis" : {
+                     "name" : null,
+                     "mode" : "time",
+                     "show" : true,
+                     "values" : [],
+                     "buckets" : null
+                  },
+                  "points" : false,
+                  "percentage" : false,
+                  "bars" : false,
+                  "targets" : [
+                     {
+                        "expr" : "topk(1, sum(increase(demo_commande_seconds_count[1h])) by (dessert))",
+                        "refId" : "A",
+                        "hide" : false,
+                        "format" : "time_series",
+                        "intervalFactor" : 2
+                     }
+                  ],
+                  "title" : "Top dessert",
+                  "spaceLength" : 10,
+                  "span" : 4,
+                  "thresholds" : [],
+                  "yaxes" : [
+                     {
+                        "max" : null,
+                        "logBase" : 1,
+                        "format" : "short",
+                        "show" : true,
+                        "label" : null,
+                        "min" : null
+                     },
+                     {
+                        "logBase" : 1,
+                        "max" : null,
+                        "label" : null,
+                        "min" : null,
+                        "show" : true,
+                        "format" : "short"
+                     }
+                  ],
+                  "links" : [],
+                  "steppedLine" : false,
+                  "pointradius" : 5,
+                  "lines" : true,
+                  "dashLength" : 10,
+                  "timeShift" : null,
+                  "dashes" : false,
+                  "seriesOverrides" : [],
+                  "nullPointMode" : "null",
+                  "datasource" : null,
+                  "fill" : 1,
+                  "linewidth" : 1,
+                  "legend" : {
+                     "max" : false,
+                     "total" : false,
+                     "current" : false,
+                     "show" : true,
+                     "min" : false,
+                     "avg" : false,
+                     "values" : false
+                  },
+                  "stack" : false
+               }
+            ],
+            "repeat" : null,
+            "showTitle" : false,
+            "title" : "Dashboard Row"
+         }
+      ],
+      "version" : 3,
+      "templating" : {
+         "list" : []
+      },
+      "tags" : []
+   },
+   "meta" : {
+      "slug" : "resto",
+      "updatedBy" : "admin",
+      "canStar" : true,
+      "created" : "2017-11-19T22:02:16Z",
+      "expires" : "0001-01-01T00:00:00Z",
+      "type" : "db",
+      "updated" : "2017-11-19T23:28:36Z",
+      "createdBy" : "admin",
+      "version" : 3,
+      "canSave" : true,
+      "canEdit" : true
+   }
+}

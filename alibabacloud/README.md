@@ -51,7 +51,7 @@ kk get pods --all-namespaces
 # install the application
 
 ```
-kk run resto --image=dbenque/prom-demo-resto:v2 --expose --port=8080
+kk run resto --image=dbenque/prom-demo-resto:v3 --expose --port=8080
 ```
 
 Note: I am not using ngnix ingress because the I am facing problem with content-type overwrite that prevent correct loading of css and js resources that are sent as "text/html"

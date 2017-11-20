@@ -3,15 +3,7 @@
 BASEDIR=$(dirname "$0")
 
 cd $BASEDIR
-echo -e "\e[1;33mCleaning previous Prometheus and Grafana local installation\e[0m"
-docker stop prom-local &>/dev/null
-docker stop prom-fed &>/dev/null
-docker stop prom-nodeexporter &>/dev/null
-docker stop grafana &>/dev/null
-docker rm prom-local &>/dev/null
-docker rm prom-fed &>/dev/null
-docker rm prom-nodeexporter &>/dev/null
-docker rm grafana &>/dev/null
+./stop.local.sh
 
 sleep 2
 
@@ -35,4 +27,7 @@ done
 echo
 echo -e "\e[1;33mAdding prometheus as datasource for Grafana\e[0m"
 curl -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d '{"name":"prometheus","isDefault":true,"type":"prometheus","url":"http://localhost:9090","access":"proxy","jsonData":{"tlsSkipVerify":true,"timeInterval":"5s"},"secureJsonFields":{}}'  http://admin:admin@localhost:3000/api/datasources 
+echo
+echo -e "\e[1;33mCreating Resto Dashboard\e[0m"
+curl -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d@dash.resto.json http://admin:admin@localhost:3000/api/dashboards/db
 echo

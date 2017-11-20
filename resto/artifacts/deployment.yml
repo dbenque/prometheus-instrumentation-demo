@@ -16,7 +16,7 @@ spec:
         run: resto
     spec:
       containers:
-      - image: dbenque/prom-demo-resto:v2
+      - image: dbenque/prom-demo-resto:v3
         imagePullPolicy: IfNotPresent
         name: resto
         ports:
