@@ -21,6 +21,6 @@ scrape_configs:
 
     static_configs:
       - targets:
-#        - 'localhost:9090'
+        - '127.0.0.1:9090'
         - '35.192.43.45:30900' # GKE
         - '35.193.175.182:30900' #GK2

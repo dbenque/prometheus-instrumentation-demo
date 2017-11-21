@@ -472,7 +472,7 @@
                   "fontSize" : "100%",
                   "scroll" : true,
                   "columns" : [],
-                  "title" : "Top Menu",
+                  "title" : "Flop Menu",
                   "type" : "table",
                   "transform" : "table",
                   "span" : 3,
