@@ -1,0 +1,528 @@
+{
+   "meta" : {
+      "created" : "2017-11-20T23:20:34Z",
+      "type" : "db",
+      "slug" : "restofed",
+      "updated" : "2017-11-20T23:42:09Z",
+      "updatedBy" : "admin",
+      "canStar" : true,
+      "createdBy" : "admin",
+      "expires" : "0001-01-01T00:00:00Z",
+      "canEdit" : true,
+      "canSave" : true,
+      "version" : 7
+   },
+   "dashboard" : {
+      "time" : {
+         "to" : "now",
+         "from" : "now-1h"
+      },
+      "title" : "RestoFed",
+      "templating" : {
+         "list" : [
+            {
+               "name" : "pod",
+               "query" : "label_values(demo_commande_seconds_count,pod)",
+               "multi" : true,
+               "sort" : 0,
+               "datasource" : "promfederation",
+               "hide" : 0,
+               "includeAll" : true,
+               "regex" : "",
+               "tags" : [],
+               "tagValuesQuery" : "",
+               "refresh" : 2,
+               "allValue" : null,
+               "tagsQuery" : "",
+               "current" : {
+                  "value" : "$__all",
+                  "text" : "All"
+               },
+               "options" : [],
+               "label" : "pod",
+               "useTags" : false,
+               "type" : "query"
+            },
+            {
+               "hide" : 0,
+               "tagValuesQuery" : "",
+               "tags" : [],
+               "refresh" : 2,
+               "allValue" : null,
+               "includeAll" : true,
+               "regex" : "",
+               "multi" : true,
+               "name" : "cluster",
+               "query" : "label_values(demo_commande_seconds_count,cluster)",
+               "datasource" : "promfederation",
+               "sort" : 0,
+               "label" : "cluster",
+               "useTags" : false,
+               "type" : "query",
+               "tagsQuery" : "",
+               "current" : {
+                  "text" : "gke",
+                  "value" : [
+                     "gke"
+                  ]
+               },
+               "options" : []
+            }
+         ]
+      },
+      "annotations" : {
+         "list" : [
+            {
+               "name" : "Annotations & Alerts",
+               "iconColor" : "rgba(0, 211, 255, 1)",
+               "hide" : true,
+               "datasource" : "-- Grafana --",
+               "builtIn" : 1,
+               "type" : "dashboard",
+               "enable" : true
+            }
+         ]
+      },
+      "rows" : [
+         {
+            "repeatRowId" : null,
+            "titleSize" : "h6",
+            "repeat" : null,
+            "showTitle" : false,
+            "height" : 276,
+            "title" : "Dashboard Row",
+            "repeatIteration" : null,
+            "panels" : [
+               {
+                  "bars" : false,
+                  "fill" : 1,
+                  "percentage" : false,
+                  "seriesOverrides" : [],
+                  "id" : 4,
+                  "renderer" : "flot",
+                  "targets" : [
+                     {
+                        "format" : "time_series",
+                        "refId" : "B",
+                        "intervalFactor" : 2,
+                        "expr" : "sum(increase(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"}[30s])) by (plat)",
+                        "hide" : false
+                     },
+                     {
+                        "refId" : "A",
+                        "format" : "time_series",
+                        "intervalFactor" : 2,
+                        "expr" : "sum(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"}) by (plat) - sum(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"} offset 3m ) by (plat)",
+                        "hide" : true
+                     },
+                     {
+                        "intervalFactor" : 2,
+                        "format" : "time_series",
+                        "refId" : "C",
+                        "hide" : true,
+                        "expr" : "sum(increase(demo_commande_seconds_count[30s])) by (plat)"
+                     }
+                  ],
+                  "datasource" : "promfederation",
+                  "links" : [],
+                  "span" : 6,
+                  "legend" : {
+                     "avg" : false,
+                     "values" : false,
+                     "total" : false,
+                     "max" : false,
+                     "current" : false,
+                     "show" : true,
+                     "min" : false
+                  },
+                  "timeFrom" : null,
+                  "stack" : false,
+                  "pointradius" : 5,
+                  "yaxes" : [
+                     {
+                        "show" : true,
+                        "logBase" : 1,
+                        "min" : null,
+                        "format" : "short",
+                        "max" : null,
+                        "label" : null
+                     },
+                     {
+                        "label" : null,
+                        "format" : "short",
+                        "show" : true,
+                        "min" : null,
+                        "logBase" : 1,
+                        "max" : null
+                     }
+                  ],
+                  "thresholds" : [],
+                  "xaxis" : {
+                     "show" : true,
+                     "name" : null,
+                     "values" : [],
+                     "buckets" : null,
+                     "mode" : "time"
+                  },
+                  "nullPointMode" : "null",
+                  "dashes" : false,
+                  "timeShift" : null,
+                  "tooltip" : {
+                     "shared" : true,
+                     "value_type" : "individual",
+                     "sort" : 0
+                  },
+                  "points" : false,
+                  "linewidth" : 1,
+                  "aliasColors" : {},
+                  "steppedLine" : false,
+                  "dashLength" : 10,
+                  "lines" : true,
+                  "type" : "graph",
+                  "spaceLength" : 10,
+                  "title" : "Plats"
+               },
+               {
+                  "title" : "Desserts",
+                  "lines" : true,
+                  "type" : "graph",
+                  "spaceLength" : 10,
+                  "dashLength" : 10,
+                  "steppedLine" : false,
+                  "aliasColors" : {},
+                  "linewidth" : 1,
+                  "points" : false,
+                  "timeShift" : null,
+                  "tooltip" : {
+                     "shared" : true,
+                     "sort" : 0,
+                     "value_type" : "individual"
+                  },
+                  "dashes" : false,
+                  "nullPointMode" : "null",
+                  "xaxis" : {
+                     "buckets" : null,
+                     "name" : null,
+                     "values" : [],
+                     "mode" : "time",
+                     "show" : true
+                  },
+                  "thresholds" : [],
+                  "yaxes" : [
+                     {
+                        "max" : null,
+                        "format" : "short",
+                        "min" : null,
+                        "show" : true,
+                        "logBase" : 1,
+                        "label" : null
+                     },
+                     {
+                        "label" : null,
+                        "max" : null,
+                        "format" : "short",
+                        "logBase" : 1,
+                        "show" : true,
+                        "min" : null
+                     }
+                  ],
+                  "pointradius" : 5,
+                  "timeFrom" : null,
+                  "stack" : false,
+                  "legend" : {
+                     "current" : false,
+                     "max" : false,
+                     "show" : true,
+                     "min" : false,
+                     "values" : false,
+                     "avg" : false,
+                     "total" : false
+                  },
+                  "span" : 6,
+                  "links" : [],
+                  "datasource" : "promfederation",
+                  "targets" : [
+                     {
+                        "refId" : "B",
+                        "format" : "time_series",
+                        "intervalFactor" : 2,
+                        "expr" : "sum(increase(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"}[30s])) by (dessert)",
+                        "hide" : false
+                     },
+                     {
+                        "hide" : true,
+                        "expr" : "sum(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"}) by (dessert) - sum(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"} offset 3m ) by (dessert)",
+                        "intervalFactor" : 2,
+                        "refId" : "A",
+                        "format" : "time_series"
+                     },
+                     {
+                        "intervalFactor" : 2,
+                        "format" : "time_series",
+                        "refId" : "C",
+                        "hide" : true,
+                        "expr" : "sum(increase(demo_commande_seconds_count[30s])) by (dessert)"
+                     }
+                  ],
+                  "renderer" : "flot",
+                  "id" : 10,
+                  "seriesOverrides" : [],
+                  "fill" : 1,
+                  "percentage" : false,
+                  "bars" : false
+               }
+            ],
+            "collapse" : false
+         },
+         {
+            "title" : "Dashboard Row",
+            "repeatIteration" : null,
+            "panels" : [
+               {
+                  "scroll" : true,
+                  "fontSize" : "100%",
+                  "columns" : [],
+                  "styles" : [
+                     {
+                        "alias" : "Time",
+                        "pattern" : "Time",
+                        "dateFormat" : "YYYY-MM-DD HH:mm:ss",
+                        "type" : "hidden"
+                     },
+                     {
+                        "colors" : [
+                           "rgba(245, 54, 54, 0.9)",
+                           "rgba(237, 129, 40, 0.89)",
+                           "rgba(50, 172, 45, 0.97)"
+                        ],
+                        "thresholds" : [],
+                        "unit" : "short",
+                        "alias" : "",
+                        "type" : "number",
+                        "decimals" : 2,
+                        "colorMode" : null,
+                        "pattern" : "/.*/"
+                     }
+                  ],
+                  "id" : 6,
+                  "targets" : [
+                     {
+                        "expr" : "topk(3, sum(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"}) by (plat))",
+                        "legendFormat" : "{{plat}}",
+                        "format" : "table",
+                        "refId" : "A",
+                        "intervalFactor" : 2,
+                        "instant" : true
+                     }
+                  ],
+                  "datasource" : "promfederation",
+                  "sort" : {
+                     "desc" : true,
+                     "col" : 2
+                  },
+                  "pageSize" : null,
+                  "links" : [],
+                  "showHeader" : true,
+                  "span" : 3,
+                  "transform" : "table",
+                  "type" : "table",
+                  "title" : "Top Plat"
+               },
+               {
+                  "scroll" : true,
+                  "columns" : [],
+                  "fontSize" : "100%",
+                  "styles" : [
+                     {
+                        "alias" : "Time",
+                        "type" : "hidden",
+                        "dateFormat" : "YYYY-MM-DD HH:mm:ss",
+                        "pattern" : "Time"
+                     },
+                     {
+                        "colorMode" : null,
+                        "pattern" : "/.*/",
+                        "decimals" : 2,
+                        "type" : "number",
+                        "alias" : "",
+                        "unit" : "short",
+                        "thresholds" : [],
+                        "colors" : [
+                           "rgba(245, 54, 54, 0.9)",
+                           "rgba(237, 129, 40, 0.89)",
+                           "rgba(50, 172, 45, 0.97)"
+                        ]
+                     }
+                  ],
+                  "id" : 7,
+                  "targets" : [
+                     {
+                        "refId" : "A",
+                        "format" : "table",
+                        "instant" : true,
+                        "intervalFactor" : 2,
+                        "expr" : "topk(3, sum(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"}) by (dessert))",
+                        "legendFormat" : "{{plat}}"
+                     }
+                  ],
+                  "datasource" : "promfederation",
+                  "links" : [],
+                  "pageSize" : null,
+                  "sort" : {
+                     "desc" : true,
+                     "col" : 2
+                  },
+                  "span" : 3,
+                  "showHeader" : true,
+                  "transform" : "table",
+                  "title" : "Top Dessert",
+                  "type" : "table"
+               },
+               {
+                  "datasource" : "promfederation",
+                  "targets" : [
+                     {
+                        "legendFormat" : "{{plat}}",
+                        "expr" : "topk(3, sum(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"}) by (plat,dessert))",
+                        "intervalFactor" : 2,
+                        "instant" : true,
+                        "refId" : "A",
+                        "format" : "table"
+                     }
+                  ],
+                  "sort" : {
+                     "desc" : true,
+                     "col" : 3
+                  },
+                  "links" : [],
+                  "pageSize" : null,
+                  "scroll" : true,
+                  "fontSize" : "100%",
+                  "columns" : [],
+                  "styles" : [
+                     {
+                        "type" : "hidden",
+                        "pattern" : "Time",
+                        "dateFormat" : "YYYY-MM-DD HH:mm:ss",
+                        "alias" : "Time"
+                     },
+                     {
+                        "alias" : "",
+                        "colorMode" : null,
+                        "pattern" : "/.*/",
+                        "type" : "number",
+                        "decimals" : 2,
+                        "thresholds" : [],
+                        "colors" : [
+                           "rgba(245, 54, 54, 0.9)",
+                           "rgba(237, 129, 40, 0.89)",
+                           "rgba(50, 172, 45, 0.97)"
+                        ],
+                        "unit" : "short"
+                     }
+                  ],
+                  "id" : 8,
+                  "type" : "table",
+                  "title" : "Top Menu",
+                  "showHeader" : true,
+                  "span" : 3,
+                  "transform" : "table"
+               },
+               {
+                  "pageSize" : null,
+                  "links" : [],
+                  "sort" : {
+                     "col" : 3,
+                     "desc" : false
+                  },
+                  "targets" : [
+                     {
+                        "format" : "table",
+                        "refId" : "A",
+                        "instant" : true,
+                        "intervalFactor" : 2,
+                        "expr" : "bottomk(3, sum(demo_commande_seconds_count{pod=~\"$pod\",cluster=~\"$cluster\"}) by (plat,dessert))",
+                        "legendFormat" : "{{plat}}"
+                     }
+                  ],
+                  "datasource" : "promfederation",
+                  "styles" : [
+                     {
+                        "alias" : "Time",
+                        "type" : "hidden",
+                        "dateFormat" : "YYYY-MM-DD HH:mm:ss",
+                        "pattern" : "Time"
+                     },
+                     {
+                        "colorMode" : null,
+                        "pattern" : "/.*/",
+                        "decimals" : 2,
+                        "type" : "number",
+                        "alias" : "",
+                        "unit" : "short",
+                        "colors" : [
+                           "rgba(245, 54, 54, 0.9)",
+                           "rgba(237, 129, 40, 0.89)",
+                           "rgba(50, 172, 45, 0.97)"
+                        ],
+                        "thresholds" : []
+                     }
+                  ],
+                  "id" : 9,
+                  "fontSize" : "100%",
+                  "scroll" : true,
+                  "columns" : [],
+                  "title" : "Top Menu",
+                  "type" : "table",
+                  "transform" : "table",
+                  "span" : 3,
+                  "showHeader" : true
+               }
+            ],
+            "collapse" : false,
+            "repeatRowId" : null,
+            "titleSize" : "h6",
+            "repeat" : null,
+            "showTitle" : false,
+            "height" : 250
+         }
+      ],
+      "gnetId" : null,
+      "version" : 7,
+      "style" : "dark",
+      "links" : [],
+      "graphTooltip" : 0,
+      "timezone" : "",
+      "id" : null,
+      "refresh" : "5s",
+      "tags" : [],
+      "editable" : true,
+      "timepicker" : {
+         "refresh_intervals" : [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+         ],
+         "time_options" : [
+            "5m",
+            "15m",
+            "1h",
+            "6h",
+            "12h",
+            "24h",
+            "2d",
+            "7d",
+            "30d"
+         ]
+      },
+      "hideControls" : false,
+      "schemaVersion" : 14
+   }
+}

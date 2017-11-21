@@ -39,7 +39,7 @@ KUBECONFIG=$HOME/.kube/gce.conf gcloud container clusters get-credentials cluste
 If you plan to work in a multi-context environment then check the project **https://github.com/dbenque/k8s-ps1** use **kcontext.sh**
 ```
 export KUBECONFIG=$KUBECONFIG:~/.kube/gce.conf
-kubectl config getcontexts
+kubectl config get-contexts
 kubectl config rename-context gke_prometheus-demo-185320_us-central1-a_cluster-1 gke
 kubectl config use-context gke
 ```
@@ -48,7 +48,7 @@ For later use get the External_IP of one node:
 ```
 gcloud compute instances list --project prometheus-demo-185320
 
-IP=35.188.62.95
+IP=35.192.43.45
 ```
 
 # install the application
@@ -63,7 +63,7 @@ Retrieve the allocated NodePort
 ```
 PORTRESTO=$(kubectl get service resto -ojsonpath='{..nodePort}')
 ```
-Open firewall
+Open firewall (do a delete before if the rule with same name already exist from a previous install)
 ```
 gcloud compute firewall-rules create resto --allow tcp:$PORTRESTO
 ```
