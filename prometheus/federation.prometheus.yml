@@ -1,5 +1,5 @@
 global:
-  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  scrape_interval:     30s # By default, scrape targets every 15 seconds.
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
@@ -10,7 +10,7 @@ global:
 # Here it's Prometheus itself.
 scrape_configs:
   - job_name: 'federate'
-    scrape_interval: 10s
+    scrape_interval: 30s
 
     honor_labels: true
     metrics_path: '/federate'
@@ -18,9 +18,10 @@ scrape_configs:
     params:
       'match[]':
         - '{__name__=~"demo.*"}'
+        - '{__name__=~"node_network.*"}'
 
     static_configs:
       - targets:
         - '127.0.0.1:9090'
-        - '35.192.43.45:30900' # GKE
-        - '35.193.175.182:30900' #GK2
+        #- '35.192.43.45:30900' # GKE
+        #- '35.193.175.182:30900' #GK2
