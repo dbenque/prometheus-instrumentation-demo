@@ -27,7 +27,7 @@ For simplicity set your projet:
 You can do it with the UI or in the using gcloud command line:
 
 ```
-gcloud beta container --project "prometheus-demo-185320" clusters create "cluster-1" --zone "us-central1-a" --username="admin" --cluster-version "1.8.2-gke.0" --machine-type "n1-standard-1" --image-type "COS" --disk-size "100" --scopes "https://www.googleapis.com/auth/compute","https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" --num-nodes "3" --network "default" --enable-cloud-logging --no-enable-cloud-monitoring --subnetwork "default" --enable-legacy-authorization
+gcloud beta container --project "prometheus-demo-185320" clusters create "cluster-1" --zone "us-central1-a" --username="admin" --cluster-version "1.8.6-gke.0" --machine-type "n1-standard-1" --image-type "COS" --disk-size "100" --scopes "https://www.googleapis.com/auth/compute","https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" --num-nodes "3" --network "default" --enable-cloud-logging --no-enable-cloud-monitoring --subnetwork "default" --enable-legacy-authorization
 ```
 
 get the Kubernetes cluster configuration
@@ -50,6 +50,21 @@ gcloud compute instances list --project prometheus-demo-185320
 
 IP=35.192.43.45
 ```
+
+# permissions
+
+Retrieve your user
+```
+gcloud info | grep Account
+```
+
+Give yourself cluster admin role:
+```
+MYUSER=$(gcloud info | grep Account | sed -rn 's/.*\[(.*)\]$/\1/p')
+kubectl create clusterrolebinding myname-cluster-admin-binding --clusterrole=cluster-admin --user=$MYUSER
+```
+
+If you miss that step you will face some problem later when using the prometheus-operator. See https://github.com/coreos/prometheus-operator/blob/release-0.16/Documentation/troubleshooting.md
 
 # install the application
 
