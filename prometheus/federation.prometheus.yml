@@ -1,5 +1,6 @@
 global:
   scrape_interval:     30s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 10s
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
@@ -23,5 +24,5 @@ scrape_configs:
     static_configs:
       - targets:
         - '127.0.0.1:9090'
-        #- '35.192.43.45:30900' # GKE
-        #- '35.193.175.182:30900' #GK2
+        - '104.197.55.124:30900' # GKE
+        - '35.193.164.246:30900' #GK2

@@ -4,6 +4,9 @@
 # PREREQUISIT: First log-in and set project
 # gcloud auth login
 # gcloud config set project prometheus-demo-185320
+#
+# Caution: The following files will be removed by the script:
+# ~/.kube/gce[0-9].conf
 
 gke_cluster()
 {
@@ -11,8 +14,9 @@ gke_cluster()
     NBNODE=$2
 
     gcloud beta container --project "prometheus-demo-185320" clusters create "cluster-$NUMCLUSTER" --zone "us-central1-a" --username="admin" --cluster-version "1.8.6-gke.0" --machine-type "n1-standard-1" --image-type "COS" --disk-size "100" --scopes "https://www.googleapis.com/auth/compute","https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" --num-nodes "$NBNODE" --network "default" --enable-cloud-logging --no-enable-cloud-monitoring --subnetwork "default" --enable-legacy-authorization
+    rm $HOME/.kube/gce$NUMCLUSTER.conf
     KUBECONFIG=$HOME/.kube/gce$NUMCLUSTER.conf gcloud container clusters get-credentials cluster-$NUMCLUSTER --zone us-central1-a --project prometheus-demo-185320
-    export KUBECONFIG=$KUBECONFIG:~/.kube/gce$NUMCLUSTER.conf
+    KUBECONFIG=~/.kube/gce$NUMCLUSTER.conf
     kubectl config get-contexts
     kubectl config rename-context gke_prometheus-demo-185320_us-central1-a_cluster-$NUMCLUSTER gke$NUMCLUSTER
     kubectl config use-context gke$NUMCLUSTER
