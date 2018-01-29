@@ -1,9 +1,9 @@
 #!/bin/bash
-## Create GKE Clusters
+## Create 2 identical GKE Clusters under the same project, install prometheus+grafana using coreos operator
 # 
 # PREREQUISIT: First log-in and set project
 # gcloud auth login
-# gcloud config set project prometheus-demo-185320
+# gcloud config set project prometheus-demo-185320    <-- replace with your own project
 #
 # Caution: The following files will be removed by the script:
 # ~/.kube/gce[0-9].conf
